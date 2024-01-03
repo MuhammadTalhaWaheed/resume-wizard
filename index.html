@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Wizard</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <img src="1.jpg" alt="Header Image" class="header-image">
+    <div class="project-name">Resume Wizard</div>
+ 
+  </div>
+   <div class="dot dot1"></div>
+  <div class="dot dot2"></div>
+  <div class="progress-indicator">
+    <div class="step active"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+  </div>
+  <div class="sidebar">
+      <div class="step">Step #1 </div>
+      <div class="step">Step #2 </div>
+      <div class="step">Step #3 </div>
+      <div class="step">Step #4 </div>
+    </div>
+
+  <div class='signup-container'>
+    <form id="signupForm">
+      
+      <div id="step1">
+        <h1 style="color: white;">Search and Delete Resume</h1>
+        <div class='form-group'>
+          <label for="searchResumeID"><strong>Resume ID</strong></label>
+          <input type="text" placeholder='Enter Resume ID' name='searchResumeID' id='searchResumeID' class='rounded-0' />
+          <button type='button' onclick='searchResume("searchResumeID")' class='rounded-0 start-over'>Search Resume</button>
+          <button type="button" onclick="deleteResume('searchResumeID')" class="rounded-0 start-over" style="float: right;">Delete Resume</button>
+          <button type="button" onclick="rollbackResume('searchResumeID')" class="rounded-0 start-over" style="float: right;">Rollback Resume</button>
+          </div>
+        <div id="generated-resume-contents"></div>
+        <h1 style="color: white;">Update User Information</h1>
+
+
+
+<div class='form-group'>
+  <label for="searchuserID"><strong>User ID</strong></label>
+  <input type="text" placeholder='Enter User ID' name='searchuserID' id='searchuserID' class='rounded-0' />
+</div>
+<button type='button' onclick='toggleUpdateSection()' class='rounded-0 start-over'>Update User Info</button>
+<button type='button' onclick='RollbackUpdatedUser("searchuserID")' class='rounded-0 start-over'>Rollback Update User Info</button>
+<script>
+  function toggleUpdateSection() {
+    var updateSection = document.getElementById('update-section');
+    updateSection.style.display = (updateSection.style.display === 'none' || updateSection.style.display === '') ? 'block' : 'none';
+  }
+</script>
+<div id="update-section" style="display: none;">
+  <div class='form-group'>
+    <label for="updatedPassword"><strong>Updated Password</strong></label>
+    <input type="password" placeholder='Enter updated password' name='updatedPassword' id='updatedPassword' class='rounded-0' />
+  </div>
+  
+  <div class='form-group'>
+    <label for="updatedEmail"><strong>Updated Email</strong></label>
+    <input type="email" placeholder='Enter updated email' name='updatedEmail' id='updatedEmail' class='rounded-0' />
+  </div>
+
+  <button type='button' onclick='updateUser()' class='rounded-0 start-over'>Update</button>
+</div>
+      <h1 style="color: white;">User And Resume information </h1>
+      <h2 style="color: white;">User Info</h2>
+   
+      <div class='form-group'>
+        <label for="UserID"><strong>User ID</strong></label>
+        <input type="text" placeholder='Enter Serial no.' name='UserID' id='userid' class='rounded-0' />
+      </div>
+        <div class='form-group'>
+        <label for="Username"><strong>Username</strong></label>
+        <input type="text" placeholder='Enter Username' name='Username' id='username' class='rounded-0' />
+      </div>
+      <div class='form-group'>
+        <label for="Email"><strong>Email</strong></label>
+        <input type="email" placeholder='Enter Email' name='Email' id='email' class='rounded-0' />
+        <div id="email-error" style="color: rgb(0, 213, 255);"></div>
+      </div>
+      <div class='form-group'>
+        <label for="Password"><strong>Password</strong></label>
+        <input type="password" placeholder='Enter Password' name='Password' id='password' class='rounded-0' />
+        <div id="password-error" style="color: rgb(0, 213, 255);"></div>
+      </div>
+      <h2 style="color: white;"> Resume Info</h2>
+      <div class='form-group'>
+        <label for="ResumeID"><strong>Resume ID</strong></label>
+        <input type="text" placeholder='Enter Resume no.' name='ResumeID' id='resumeID' class='rounded-0' />
+      </div>
+      <div class='form-group'>
+        <label for="Title"><strong>Title</strong></label>
+        <input type="text" placeholder='Enter Title' name='Title' id='title' class='rounded-0' />
+      </div>
+      <div class='form-group'>
+        <label for="DateCreated"><strong>Date Created</strong></label>
+        <input type="date" placeholder='Enter DateCreated' name='DateCreated' id='datecreated' class='rounded-0' />
+      </div>  
+      <div class="button-container">
+        <img src="3.png" alt="next" class='image' width="60" height="60" onclick="nextAndMoveToStep()">    
+      </div>
+    </div>
+      <div id="step2" style="display: none;">
+        <h1 style="color: white;">Education, Project, and Certification </h1>
+      <h2 style="color: white;"> Education</h2>
+
+      <div class='form-group'>
+      <label for="Degree"><strong>Degree</strong></label>
+       <input type="text" placeholder='Enter Degree' name='Degree' id='degree'class='rounded-0' />
+    </div>
+      <div class='form-group'>
+     <label for="School"><strong>School</strong></label>
+      <input type="text" placeholder='Enter School' name='School' id='school' class='rounded-0' />
+      </div>
+      <div class='form-group'>
+        <label for="GraduationYear"><strong>Graduation Year</strong></label>
+        <input type="number" placeholder='Enter Graduation Year' name='GraduationYear' id='graduationyear' class='rounded-0' min="1900" max="2100" />
+        <div id="graduationyear-error" style="color:rgb(0, 213, 255);"></div>
+      
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var graduationYearInput = document.getElementById('graduationyear');
+            var graduationYearError = document.getElementById('graduationyear-error');
+      
+            graduationYearInput.addEventListener('input', function () {
+              var inputValue = graduationYearInput.value;
+              
+              if (isNaN(inputValue) || inputValue < 1900 || inputValue > 2100) {
+                graduationYearError.textContent = 'Please enter a valid graduation year between 1900 and 2100.';
+              } else {
+                graduationYearError.textContent = '';
+              }
+            });
+          });
+        </script>
+      </div>
+      <h2 style="color: white;">Project Info</h2>
+
+      <div class='form-group'>
+        <label for="ProjectName"><strong>Project Name</strong></label>
+        <input type="text" placeholder='Enter ProjectName' name='ProjectName' id='projectname' class='rounded-0' />
+      </div>
+      <div class='form-group'>
+        <label for="Description"><strong>Description</strong></label>
+        <input type="text" placeholder='Enter Description' name='Description' id='description' class='rounded-0' />
+      </div> 
+      <div class='form-group'>
+        <label for="ProjectStartDate"><strong>Project Start Date</strong></label>
+        <input type="date" placeholder='Enter Project Start Date' name='ProjectStartDate' id='projectstartdate' class='rounded-0' />
+      </div>
+      
+      <div class='form-group'>
+        <label for="ProjectEndDate"><strong>Project End Date</strong></label>
+        <input type="date" placeholder='Enter Project End Date' name='ProjectEndDate' id='projectenddate' class='rounded-0' />
+        <div id="date-error" style="color: rgb(0, 213, 255);"></div>
+      </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var startDateInput = document.getElementById('projectstartdate');
+          var endDateInput = document.getElementById('projectenddate');
+          var dateError = document.getElementById('date-error');
+      
+          startDateInput.addEventListener('input', validateDateRange);
+          endDateInput.addEventListener('input', validateDateRange);
+      
+          function validateDateRange() {
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(endDateInput.value);
+      
+            if (startDate > endDate) {
+              dateError.textContent = 'End date must be equal to or later than the start date.';
+            } else {
+              dateError.textContent = '';
+            }
+          }
+        });
+      </script>
+         
+      <h2 style="color: white;"> Certification</h2>
+      <div class='form-group'>
+        <label for="CertificationID"><strong>Certification ID</strong></label>
+        <input type="text" placeholder='Enter CertificationID' name='CertificationID' id='certificationid' class='rounded-0' />
+        </div>
+    <div class='form-group'>
+    <label for="CertificationName"><strong>Certification Name</strong></label>
+     <input type="text" placeholder='Enter CertificationName' name='CertificationName' id='certificationname'class='rounded-0' />
+    </div>
+    <div class='form-group'>
+   <label for="Issuer"><strong>Issuer</strong></label>
+    <input type="text" placeholder='Enter Issuer' name='Issuer' id='issuer' class='rounded-0' />
+    </div> 
+    <div class="button-container">
+      <img src="2.png" alt="Previous" class='prev' width="60" height="60" onclick="prevAndMoveToStep1()">
+    <img src="4.jpg" alt="next" class='start-over' width="50" height="50" onclick="startoverToStep1()">
+    <img src="3.png" alt="next" class='next' width="60" height="60" onclick="nextAndMoveToStep3()">
+
+    </div>  
+  </div>
+  <div id="step3" style="display: none;">
+    <h1 style="color: white;">Experience, Skills and language</h1>
+    <h2 style="color: white;"> Experience Info</h2>
+
+    <div class='form-group'>
+      <label for="Position"><strong>Position</strong></label>
+      <input type="text" placeholder='Enter Position' name='Position' id='position' class='rounded-0' />
+    </div>
+    <div class='form-group'>
+      <label for="Company"><strong>Company</strong></label>
+      <input type="text" placeholder='Enter Company' name='Company' id='company' class='rounded-0' />
+    </div> 
+    <div class='form-group'>
+      <label for="StartDate"><strong>Start Date</strong></label>
+      <input type="date" placeholder='Enter StartDate' name='StartDate' id='startdate' class='rounded-0' />
+    </div>
+    
+    <div class='form-group'>
+      <label for="EndDate"><strong>End Date</strong></label>
+      <input type="date" placeholder='Enter EndDate' name='EndDate' id='enddate' class='rounded-0' />
+      <div id="date-error2" style="color:rgb(0, 213, 255);"></div>
+    </div>
+        
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var startDateInput = document.getElementById('startdate');
+            var endDateInput = document.getElementById('enddate');
+            var dateError = document.getElementById('date-error2');
+        
+            startDateInput.addEventListener('input', validateDateRange);
+            endDateInput.addEventListener('input', validateDateRange);
+        
+            function validateDateRange() {
+              var startDate = new Date(startDateInput.value);
+              var endDate = new Date(endDateInput.value);
+        
+              if (startDate > endDate) {
+                dateError.textContent = 'End date must be equal to or later than the start date.';
+              } else {
+                dateError.textContent = '';
+              }
+            }
+          });
+        </script>
+    <button type='button' onclick='saveExperience()' class='rounded-0 start-over'>Save</button>
+    <button type='button' onclick='addExperience()' class='rounded-0 start-over'>Add New Experience </button>
+
+    <h2 style="color: white;"> Skills</h2>
+  
+      <div class='form-group'>
+      <label for="SkillName"><strong>Skill Name</strong></label>
+       <input type="text" placeholder='Enter SkillName' name='SkillName' id='skillname'class='rounded-0' />
+      </div>
+      <div class='form-group'>
+     <label for="Proficiency"><strong>Proficiency</strong></label>
+        <select name='Proficiency' id='proficiency' class='rounded-0'>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+    </select>
+      </div>
+      <div class='additional-skills' style='display: none;'></div>
+      <button type='button' onclick='saveSkill()' class='rounded-0 start-over'>Save</button>
+      <button type='button' onclick='addSkill()' class='rounded-0 start-over'>Add New Skill </button>
+
+      <h2 style="color: white;"> Language</h2>
+     
+          <div class='form-group'>
+            <label for="LanguageName"><strong>Language Name</strong></label>
+            <select name='LanguageName' id='languagename' class='rounded-0'>
+                <option value="english">English</option>
+                <option value="spanish">Spanish</option>
+                <option value="sindhi">Sindhi</option>
+                <option value="urdu">Urdu</option>
+            </select>
+        </div>
+        <div class='form-group'>
+          <label for="LanguageProficiency"><strong>Language Proficiency</strong></label>
+          <select name='LanguageProficiency' id='languageproficiency' class='rounded-0'>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+          </select>
+      </div>
+      <div class='additional-language' style='display: none;'></div>
+      <button type='button' onclick='saveLanguage()' class='rounded-0 start-over'>Save</button>
+      <button type='button' onclick='addLanguage()' class='rounded-0 start-over'>Add New Language </button>
+      <div class="button-container">
+      
+      <img src="2.png" alt="Previous" class='prev' width="60" height="60" onclick="prevAndMoveToStep2()">
+      <img src="4.jpg" alt="next" class='start-over' width="50" height="50" onclick="startoverToStep1()">
+      <img src="make.png" alt="make" class='make' width="70" height="50" onclick="makeresume()">
+    </div>
+    </form>
+  </div>
+  <div id="step4" style="display: none;">
+    <h1 style="color: white;">Generated Resume</h1>
+    <pre id="generated-resume-content"></pre>
+    <img src="2.png" alt="Previous" class='prev' width="60" height="60" onclick="prevAndMoveToStep3()">
+    <a href="#" download="generated_resume.txt">
+      <img src="dow.png" alt="dow" class="dow" width="60" height="60" onclick="downloadResume()">
+    </a>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var passwordInput = document.getElementById('password');
+    var passwordError = document.getElementById('password-error');
+
+    passwordInput.addEventListener('input', function () {
+      if (passwordInput.value.length < 8) {
+        passwordError.textContent = 'Password must be at least 8 characters long.';
+      } else {
+        passwordError.textContent = '';
+      }
+    });
+  });
+    document.addEventListener('DOMContentLoaded', function () {
+    var emailInput = document.getElementById('email');
+    var emailError = document.getElementById('email-error');
+
+    emailInput.addEventListener('input', function () {
+      if (emailInput.validity.typeMismatch) {
+        emailError.textContent = 'Please enter a valid email address.';
+      } else {
+        emailError.textContent = '';
+      }
+    });
+  });
+    function downloadResume() {
+      const passwordValue = document.getElementById('password').value;
+  const maskedPassword = '*'.repeat(passwordValue.length);
+      const resumeContent = `
+    <div style="width: 48%; text-align: right;">
+        <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Gmail Icon" style="width: 60px; height: 40px;">
+        <span style="font-family: 'Arial', sans-serif; font-size: 16px;">Email: ${document.getElementById('email').value}</span>
+      </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+      <div style="width: 48%;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Personal Information</h2>
+        <div style="font-family: 'Arial', sans-serif; font-size: 18px;">
+         User ID: ${document.getElementById('userid').value}<br>
+        Username: ${document.getElementById('username').value}<br>
+        Password: ${maskedPassword}<br>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;font-family: 'Arial', sans-serif; font-size: 18px;">
+      <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Resume Information</h2>
+      Resume ID: ${document.getElementById('resumeID').value}<br>
+      Title: ${document.getElementById('title').value}<br>
+      Date Created: ${document.getElementById('datecreated').value}<br>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; justify-content: space-between;font-family: 'Arial', sans-serif; font-size: 18px;">
+      <div style="width: 48%;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Education</h2>
+       
+        Degree: ${document.getElementById('degree').value}<br>
+        School: ${document.getElementById('school').value}<br>
+        Graduation Year: ${document.getElementById('graduationyear').value}<br>
+      </div>
+
+      <div style="width: 48%;font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Experience</h2>
+       
+        Position: ${document.getElementById('position').value}<br>
+        Company: ${document.getElementById('company').value}<br>
+        Start Date: ${document.getElementById('startdate').value}<br>
+        End Date: ${document.getElementById('enddate').value}<br>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;font-family: 'Arial', sans-serif; font-size: 18px; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 10px;">
+      <div style="width: 48%;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Skills</h2>
+       
+        Skill Name: ${document.getElementById('skillname').value}<br>
+        Proficiency: ${document.getElementById('proficiency').value}<br>
+      </div>
+      
+      <div style="width: 48%;font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Certifications</h2>
+        Certification ID: ${document.getElementById('certificationid').value}<br>
+        Certification Name: ${document.getElementById('certificationname').value}<br>
+        Issuer: ${document.getElementById('issuer').value}<br>
+      </div>
+    </div>
+
+    <div style="display: flex;font-family: 'Arial', sans-serif; font-size: 18px;justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 10px;">
+      <div style="width: 48%;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Projects</h2>
+      
+        Project Name: ${document.getElementById('projectname').value}<br>
+        Description: ${document.getElementById('description').value}<br>
+        Project Start Date: ${document.getElementById('projectstartdate').value}<br>
+        Project End Date: ${document.getElementById('projectenddate').value}<br>
+      </div>
+      
+      <div style="width: 48%;font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Languages</h2>
+       
+        Language Name: ${document.getElementById('languagename').value}<br>
+        Language Proficiency: ${document.getElementById('languageproficiency').value}<br>
+      </div>
+    </div>
+  `;
+
+  const blob = new Blob([resumeContent], { type: 'text/html' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'generated_resume.html';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+     function makeresume() {
+      signup();
+      moveToStep4();
+  }
+    function moveToStep4() {
+    updateProgressIndicator(4);
+    document.getElementById('step3').style.display = 'none';
+    document.getElementById('step4').style.display = 'block';
+    displayResume();
+    
+  }
+  function displayResume2(resumeData) {
+
+  const resumeContent = `
+  <h1 style="color: white;">Generated Resume</h1>
+  <div style="width: 48%; text-align: right;">
+        <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Gmail Icon" style="width: 60px; height: 40px;">
+        <span style="font-family: 'Arial', sans-serif; font-size: 16px;">Email: ${resumeData.Email}</span>
+      </div>
+
+    <div class="resume-info">
+      <div>
+        <h2>Personal Information</h2>
+        User ID: ${resumeData.UserID}<br>
+        Password: ${resumeData.Password}<br>
+      </div>
+
+      <div>
+        <h2>Resume Information</h2>
+        Resume ID: ${resumeData.ResumeID}<br>
+        Title: ${resumeData.Title}<br>
+        Date Created: ${resumeData.DateCreated}
+      </div>
+
+      <div>
+        <h2>Education</h2>
+        Degree: ${resumeData.Degree}<br>
+        School: ${resumeData.School}<br>
+        Graduation Year: ${resumeData.GraduationYear}
+      </div>
+
+      <div>
+        <h2>Experience</h2>
+        Position: ${resumeData.Position}<br>
+        Company: ${resumeData.Company}<br>
+        Start Date: ${resumeData.StartDate}<br>
+        End Date: ${resumeData.EndDate}
+      </div>
+
+      <div>
+        <h2>Projects</h2>
+        Project name: ${resumeData.ProjectName}<br>
+        Project description: ${resumeData.Description}<br>
+      </div>
+      <div>
+        <h2>Certifications</h2>
+        Certification name: ${resumeData.CertificationName}<br>
+        Issuer: ${resumeData.Issuer}<br>
+      </div>
+      <div>
+        <h2>Skills</h2>
+        Skill name: ${resumeData.SkillName}<br>
+        Proficiency: ${resumeData.Proficiency}<br>
+      </div>
+      <br>
+    </div>
+  `;
+
+  document.getElementById('generated-resume-contents').innerHTML = resumeContent;
+}
+
+  function displayResume() {
+  const passwordValue = document.getElementById('password').value;
+  const maskedPassword = '*'.repeat(passwordValue.length);
+    const resumeContent = `
+    <div style="width: 48%; text-align: right;">
+    <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Gmail Icon" style="width: 60px; height: 40px;">
+    <span style="font-family: 'Arial', sans-serif; font-size: 16px;">Email: ${document.getElementById('email').value}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 20px;">
+    <div style="width: 48%;margin-top: 5px; font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Personal Information</h2>
+            User ID: ${document.getElementById('userid').value}<br>
+            Username: ${document.getElementById('username').value}<br>
+            Password: ${maskedPassword}
+    </div>
+
+    <div style="width: 48%; margin-top: 5px; font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Resume Information</h2>
+        Resume ID: ${document.getElementById('resumeID').value}<br>
+        Title: ${document.getElementById('title').value}<br>
+        Date Created: ${document.getElementById('datecreated').value}
+    </div>
+</div>
+<div style="display: flex; font-family: 'Arial', sans-serif; font-size: 18px; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 0;">
+    <div style="width: 48%; margin: 0;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Education</h2>
+       
+        Degree: ${document.getElementById('degree').value}<br>
+        School: ${document.getElementById('school').value}<br>
+        Graduation Year: ${document.getElementById('graduationyear').value}
+    </div>
+
+    <div style="width: 48%; margin: 0; font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Experience</h2>
+        
+        Position: ${document.getElementById('position').value}<br>
+        Company: ${document.getElementById('company').value}<br>
+        Start Date: ${document.getElementById('startdate').value}<br>
+        End Date: ${document.getElementById('enddate').value}
+    </div>
+</div>
+<div style="display: flex; font-family: 'Arial', sans-serif; font-size: 18px; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 0;">
+    <div style="width: 48%; margin: 0;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Skills</h2>
+       
+        Skill Name: ${document.getElementById('skillname').value}<br>
+        Proficiency: ${document.getElementById('proficiency').value}<br>
+    </div>
+
+    <div style="width: 48%; margin: 0; font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Certifications</h2>
+        Certification ID: ${document.getElementById('certificationid').value}<br>
+        Certification Name: ${document.getElementById('certificationname').value}<br>
+        Issuer: ${document.getElementById('issuer').value}<br>
+    </div>
+</div>
+<div style="display: flex; font-family: 'Arial', sans-serif; font-size: 18px; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 0;">
+    <div style="width: 48%; margin: 0;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Projects</h2>
+       
+        Project Name: ${document.getElementById('projectname').value}<br>
+        Description: ${document.getElementById('description').value}<br>
+        Project Start Date: ${document.getElementById('projectstartdate').value}<br>
+        Project End Date: ${document.getElementById('projectenddate').value}<br>
+    </div>
+
+    <div style="width: 48%; margin: 0; font-family: 'Arial', sans-serif; font-size: 18px;">
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 24px;">Languages</h2>
+       
+        Language Name: ${document.getElementById('languagename').value}<br>
+        Language Proficiency: ${document.getElementById('languageproficiency').value}<br>
+    </div>
+</div>
+
+  `;
+
+  document.getElementById('generated-resume-content').innerHTML = resumeContent;
+}
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    updateProgressIndicator(1);
+  });
+    function moveToStep2() {
+            updateProgressIndicator(2);
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+          }
+    function addSkill() {
+    //  document.getElementById('skillid').value = '';
+      document.getElementById('skillname').value = '';
+      document.getElementById('proficiency').value = '';
+      document.querySelector('.additional-skills').style.display = 'block';
+    }
+    function saveSkill() {
+ // var skillID = document.getElementById('skillid').value;
+  var skillName = document.getElementById('skillname').value;
+  var proficiency = document.getElementById('proficiency').value;
+
+  //console.log('Skill ID:', skillID);
+  console.log('Skill Name:', skillName);
+  console.log('Proficiency:', proficiency);
+}
+function addLanguage() {
+    //  document.getElementById('languageid').value = '';
+      document.getElementById('languagename').value = '';
+      document.getElementById('languageproficiency').value = '';
+      document.querySelector('.additional-language').style.display = 'block';
+    }
+function saveLanguage() {
+  //var languageID = document.getElementById('languageid').value;
+  var languageName = document.getElementById('languagename').value;
+  var languageproficiency = document.getElementById('languageproficiency').value;
+
+ // console.log('language ID:', languageID);
+  console.log('language Name:', languageName);
+  console.log('language Proficiency:', languageproficiency);
+}
+function addExperience() {
+    //  document.getElementById('experienceid').value = '';
+      document.getElementById('position').value = '';
+      document.getElementById('company').value = '';
+      document.getElementById('startdate').value = '';
+      document.getElementById('enddate').value = '';
+      document.querySelector('.additional-experience').style.display = 'block';
+    }
+function saveExperience() {
+//  var ExperienceID = document.getElementById('experienceid').value;
+  var Position = document.getElementById('position').value;
+  var Company = document.getElementById('company').value;
+  var StartDate = document.getElementById('startdate').value;
+  var Enddate = document.getElementById('enddate').value;
+  //console.log('Experience ID:', ExperienceID);
+  console.log('Company: ', Company);
+  console.log('Position:', Position);
+  console.log('Start date:', StartDate);
+  console.log('End date:', Enddate);
+}
+function nextAndMoveToStep() {
+    nextStep('step1', 'step2');
+    moveToStep2();
+  }
+function nextAndMoveToStep3() {
+    nextStep('step2', 'step3');
+    moveToStep3();
+  }
+  function moveToStep3() {
+            updateProgressIndicator(3);
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+          }
+  function prevAndMoveToStep2() {
+    prevStep('step3', 'step2');
+    prevmoveToStep2();
+  }
+  function prevAndMoveToStep3() {
+    prevStep('step4', 'step3');
+    prevmoveToStep3();
+  }
+  function prevAndMoveToStep1() {
+    prevStep('step2', 'step1');
+    prevmoveToStep1();
+  }   
+  function startoverToStep1() {
+    prevStep('step3', 'step1');
+    prevstartToStep1();
+  }     
+  function prevmoveToStep3() {
+            updateProgressIndicator(3);
+            document.getElementById('step4').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+          }
+  function prevmoveToStep2() {
+            updateProgressIndicator(2);
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+          }
+  function prevmoveToStep1() {
+            updateProgressIndicator(1);
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+          }    
+  function prevstartToStep1() {
+            updateProgressIndicator(1);
+            startOver();
+          }            
+  function updateProgressIndicator(currentStep) {
+  var steps = document.querySelectorAll('.progress-indicator .step');
+  
+  steps.forEach((step, index) => {
+    step.classList.remove('active');
+    
+    if (index === currentStep - 1) {
+      step.classList.add('active');
+    }
+  });
+  var sidebarSteps = document.querySelectorAll('.sidebar .step');
+  
+  sidebarSteps.forEach((step, index) => {
+    step.classList.remove('active');
+    
+    if (index === currentStep-1) {
+      step.classList.add('active');
+    }
+  });
+}
+
+     function nextStep(currentStepId, nextStepId) {
+      var currentStep = document.getElementById(currentStepId);
+      var nextStep = document.getElementById(nextStepId);
+      currentStep.style.display = 'none';
+      nextStep.style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function prevStep(currentStepId, prevStepId) {
+      var currentStep = document.getElementById(currentStepId);
+      var prevStep = document.getElementById(prevStepId);
+      currentStep.style.display = 'none';
+      prevStep.style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+    function startOver() {
+      document.getElementById('step1').style.display = 'block';
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('signupForm').reset();
+      window.scrollTo(0, 0);
+    }
+    function signup() {
+      var username = document.getElementById('username').value;
+      var userid = document.getElementById('userid').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+   
+      var resumeID = document.getElementById('resumeID').value;
+      var title = document.getElementById('title').value;
+      var datecreated = document.getElementById('datecreated').value;
+      const currentDate = new Date();
+  
+      //var educationid = document.getElementById('educationid').value;
+      var degree = document.getElementById('degree').value;
+      var graduationyear = document.getElementById('graduationyear').value;
+      var school = document.getElementById('school').value;
+
+      //var experienceid = document.getElementById('experienceid').value;
+      var position = document.getElementById('position').value;
+      var company = document.getElementById('company').value;
+      var startdate= document.getElementById('startdate').value;
+      var enddate= document.getElementById('enddate').value;
+
+      //var skillid = document.getElementById('skillid').value;
+      var skillname = document.getElementById('skillname').value;
+      var proficiency = document.getElementById('proficiency').value;
+
+      var certificationid = document.getElementById('certificationid').value;
+      var certificationname = document.getElementById('certificationname').value;
+      var issuer = document.getElementById('issuer').value;
+
+      //var projectid = document.getElementById('projectid').value;
+      var projectname = document.getElementById('projectname').value;
+      var description = document.getElementById('description').value;
+      var projectstartdate= document.getElementById('projectstartdate').value;
+      var projectenddate= document.getElementById('projectenddate').value;
+
+ 
+      //var languageid = document.getElementById('languageid').value;
+      var languagename = document.getElementById('languagename').value;
+      var languageproficiency = document.getElementById('languageproficiency').value;
+
+
+      var values = {
+        UserID: userid,
+        Username: username,
+        Password: password,
+        Email: email,
+
+       ResumeID: resumeID,
+        Title: title,
+        DateCreated: datecreated,
+
+        //EducationID: educationid,    
+        Degree: degree,
+        School: school,
+        GraduationYear:graduationyear,
+        
+        //ExperienceID: experienceid,
+        Position:  position,
+        Company: company,
+        StartDate: startdate,
+        EndDate: enddate,
+
+        //SkillID: skillid,
+        SkillName: skillname,
+        Proficiency: proficiency,
+        
+        CertificationID: certificationid,
+        CertificationName: certificationname,
+        Issuer: issuer,
+
+        //ProjectID: projectid,
+        ProjectName: projectname,
+        Description: description,
+        ProjectStartDate:  projectstartdate,
+        ProjectEndDate: projectenddate,
+
+        //LanguageID: languageid,
+        LanguageName:  languagename,
+        LanguageProficiency: languageproficiency
+      };
+    
+  if (projectstartdate > projectenddate) {
+    console.error('Error: "projectstartdate" cannot be in the future.');
+    return false;
+  }
+  if (datecreated > currentDate) {
+    console.error('Error: "Date Created" cannot be in the future.');
+    return false;
+  }
+  if (!email || !password) {
+    console.error('Error: All fields are required.');
+    return false;
+  }
+  if (!email.includes('@')) {
+    console.error('Error: Invalid email format. Please include the "@" symbol.');
+    return false;
+  }
+  if (password.length < 8) {
+    console.error('Error: Password must be at least 8 characters long.');
+    return false;
+  }
+      console.log(values);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:8081/resume_wizard', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          console.log('Response:', xhr.responseText);
+        } else if (xhr.readyState == 4 && xhr.status != 200) {
+          console.error('Error:', xhr.status, xhr.statusText);
+        }
+      };
+
+      xhr.send(JSON.stringify(values));
+    }
+    function searchResume(inputId) {
+  var resumeIDToSearch = document.getElementById(inputId).value;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://localhost:8081/search_resume?resumeID=' + resumeIDToSearch, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.exists) {
+          console.log('Resume found:', response.resumeDetails);
+          const resumeData = response.resumeDetails;
+          displayResume2(resumeData);
+        } else {
+          console.log('Resume not found');
+          document.getElementById('generated-resume-contents').innerHTML = '<p>Resume not found</p>';
+        }
+      } else {
+        console.error('Error:', xhr.status, xhr.statusText);
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+function RollbackUpdatedUser(inputId) {
+  var searchUserID = document.getElementById(inputId).value;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8081/rollback_updateduser?userID=' +searchUserID, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.success) {
+          console.log('Updated user info rolled back successfully');
+          alert('Updated user info rolled back successfully');
+        } else {
+          console.log('Failed to roll back Updated user info. Reason: ', response.msg);
+          alert('Failed to roll back Updated user info. Reason: ' + response.msg);
+        }
+      } else {
+        console.error('Error: ' + xhr.status + ' ' + xhr.statusText);
+        alert('Error: ' + xhr.status + ' ' + xhr.statusText);
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+function rollbackResume(inputId) {
+  var resumeIDToDelete = document.getElementById(inputId).value;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8081/rollback_resume?resumeID=' + resumeIDToDelete, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.success) {
+          console.log('Resume rolled back successfully');
+          alert('Resume rolled back successfully');
+        } else {
+          console.log('Failed to roll back resume. Reason:', response.msg);
+          alert('Failed to roll back resume. Reason: ' + response.msg);
+        }
+      } else {
+        console.error('Error: ' + xhr.status + ' ' + xhr.statusText);
+        alert('Error: ' + xhr.status + ' ' + xhr.statusText);
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+function updateUser() {
+  var searchUserID = document.getElementById('searchuserID').value;
+
+  var updatedUserData = {
+
+    UpdatedPassword: document.getElementById('updatedPassword').value,
+    UpdatedEmail: document.getElementById('updatedEmail').value,
+  };
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8081/update_user', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.success) {
+          console.log('User info updated successfully');
+          alert('User info updated successfully');
+        } else {
+          console.log('Failed to update user info');
+          alert('Failed to update user info');
+        }
+      } else {
+        alert('Error: ' + xhr.status + ' ' + xhr.statusText);
+        console.error('Error:', xhr.status, xhr.statusText);
+      }
+    }
+  };
+
+  xhr.send(JSON.stringify({ userID: searchUserID, updatedUserData }));
+}
+
+function deleteResume(inputId) {
+  var resumeIDToDelete = document.getElementById(inputId).value;
+  var xhr = new XMLHttpRequest();
+  xhr.open('DELETE', 'http://localhost:8081/delete_resume?resumeID=' + resumeIDToDelete, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.success) {
+          console.log('Resume deleted successfully');
+          alert('Resume deleted successfully');
+        } else {
+          console.log('Failed to delete resume');
+          alert('Failed to delete resume');
+        }
+      } else {
+        alert('Error: ' + xhr.status + ' ' + xhr.statusText);
+        console.error('Error:', xhr.status, xhr.statusText);
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+  </script>
+</body>
+</html>
